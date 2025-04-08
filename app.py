@@ -31,26 +31,31 @@ st.set_page_config(layout="wide")
 st.markdown(
     """
     <style>
-    /* เปลี่ยนสีพื้นหลัง sidebar */
-    [data-testid="stSidebar"] {
-        background-color: #1e3a8a !important; /* navy */
-    }
+        /* Sidebar styling */
+        [data-testid="stSidebar"] {
+            background-color: #1e3a8a;
+            color: white;
+            width: 250px;
+        }
 
-    /* ปรับข้อความใน sidebar */
-    [data-testid="stSidebar"] * {
-        color: white !important;
-        font-size: 0.85rem !important;
-    }
+        /* Make text inside sidebar smaller */
+        .sidebar-text {
+            font-size: 0.85rem;
+            color: white;
+        }
 
-    /* ย่อ sidebar */
-    div[data-testid="stSidebar"] {
-        width: 220px !important;
-    }
-
-    /* ย่อ main content ให้ชิดขวา */
-    div[class^="css"] > div:nth-child(1) {
-        margin-left: 240px;  /* เผื่อไว้ให้ชิดซ้ายมากขึ้น */
-    }
+        /* Chatbot message box */
+        .chat-message {
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .chat-user {
+            background-color: #f3f4f6;
+        }
+        .chat-bot {
+            background-color: #e5e7eb;
+        }
     </style>
     """,
     unsafe_allow_html=True
