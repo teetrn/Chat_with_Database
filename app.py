@@ -31,21 +31,26 @@ st.set_page_config(layout="wide")
 st.markdown(
     """
     <style>
-        /* Force sidebar background to dark navy */
-        section[data-testid="stSidebar"] {
-            background-color: #1e3a8a !important;
-        }
+    /* เปลี่ยนสีพื้นหลัง sidebar */
+    [data-testid="stSidebar"] {
+        background-color: #1e3a8a !important; /* navy */
+    }
 
-        /* Force all text in sidebar to be white */
-        section[data-testid="stSidebar"] * {
-            color: white !important;
-            font-size: 0.85rem !important;
-        }
+    /* ปรับข้อความใน sidebar */
+    [data-testid="stSidebar"] * {
+        color: white !important;
+        font-size: 0.85rem !important;
+    }
 
-        /* Optional: remove the line divider */
-        div[data-testid="stSidebarNav"] {
-            border-right: none !important;
-        }
+    /* ย่อ sidebar */
+    div[data-testid="stSidebar"] {
+        width: 220px !important;
+    }
+
+    /* ย่อ main content ให้ชิดขวา */
+    div[class^="css"] > div:nth-child(1) {
+        margin-left: 240px;  /* เผื่อไว้ให้ชิดซ้ายมากขึ้น */
+    }
     </style>
     """,
     unsafe_allow_html=True
