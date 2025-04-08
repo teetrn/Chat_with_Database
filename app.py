@@ -31,30 +31,20 @@ st.set_page_config(layout="wide")
 st.markdown(
     """
     <style>
-        /* Sidebar styling */
-        [data-testid="stSidebar"] {
-            background-color: #1e3a8a;
-            color: white;
-            width: 250px;
+        /* Force sidebar background to dark navy */
+        section[data-testid="stSidebar"] {
+            background-color: #1e3a8a !important;
         }
 
-        /* Make text inside sidebar smaller */
-        .sidebar-text {
-            font-size: 0.85rem;
-            color: white;
+        /* Force all text in sidebar to be white */
+        section[data-testid="stSidebar"] * {
+            color: white !important;
+            font-size: 0.85rem !important;
         }
 
-        /* Chatbot message box */
-        .chat-message {
-            padding: 0.5rem;
-            border-radius: 0.5rem;
-            margin-bottom: 0.5rem;
-        }
-        .chat-user {
-            background-color: #f3f4f6;
-        }
-        .chat-bot {
-            background-color: #e5e7eb;
+        /* Optional: remove the line divider */
+        div[data-testid="stSidebarNav"] {
+            border-right: none !important;
         }
     </style>
     """,
