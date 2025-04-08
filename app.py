@@ -29,11 +29,25 @@ with st.sidebar:
     if uploaded_file is not None:
         try:
             st.session_state.uploaded_data = pd.read_csv(uploaded_file)
-            st.success("CSV uploaded successfully")
+            st.success("✅ CSV uploaded successfully")
             st.write("📊 Preview")
             st.dataframe(st.session_state.uploaded_data.head())
         except Exception as e:
             st.error(f"Error reading the CSV file: {e}")
+
+    # Optional: Upload Data Dictionary
+    st.subheader("📘 Upload Data Dictionary (Optional)")
+    data_dict_file = st.file_uploader("Upload data dictionary CSV (optional)", type=["csv"], key="dict_file")
+    if data_dict_file is not None:
+        try:
+            st.session_state.data_dictionary = pd.read_csv(data_dict_file)
+            st.success("📘 Data Dictionary uploaded")
+            st.write("🧾 Preview")
+            st.dataframe(st.session_state.data_dictionary.head())
+        except Exception as e:
+            st.error(f"Error reading the data dictionary: {e}")
+    else:
+        st.session_state.data_dictionary = None
 
     # Checkbox for analysis toggle
     analyze_data_checkbox = st.checkbox("🔍 Analyze CSV Data with AI")
@@ -59,11 +73,18 @@ if user_input := st.chat_input("Type your message here..."):
 
     if model:
         try:
-            # AI Analysis
+            bot_response = ""
             if st.session_state.uploaded_data is not None and analyze_data_checkbox:
                 if "analyze" in user_input.lower() or "insight" in user_input.lower():
+                    # Prepare data description
                     data_description = st.session_state.uploaded_data.describe().to_string()
-                    prompt = f"Analyze the following dataset and provide insights:\n\n{data_description}"
+
+                    # Add data dictionary context if available
+                    dict_description = ""
+                    if st.session_state.data_dictionary is not None:
+                        dict_description = "\n\nHere is the data dictionary:\n" + st.session_state.data_dictionary.to_string()
+
+                    prompt = f"Analyze the following dataset and provide insights:\n\n{data_description}{dict_description}"
                     response = model.generate_content(prompt)
                     bot_response = response.text
                 else:
