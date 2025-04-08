@@ -34,13 +34,13 @@ st.markdown(
         /* Sidebar styling */
         [data-testid="stSidebar"] {
             background-color: #1e3a8a;
-            color: white;
+            /*color: white;*/
             width: 250px;
         }
 
         /* Make text inside sidebar smaller */
         .sidebar-text {
-            font-size: 0.85rem;
+            font-size: 1rem;
             color: white;
         }
 
