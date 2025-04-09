@@ -43,7 +43,12 @@ st.markdown(
             font-size: 0.9rem !important;
         }
 
-        /* Chat message box */
+        /* EXCEPTION: file uploader text to be black */
+        [data-testid="stSidebar"] [data-testid="stFileUploader"] * {
+            color: black !important;
+        }
+
+        /* Chat message styling */
         .chat-message {
             padding: 0.5rem;
             border-radius: 0.5rem;
@@ -59,6 +64,7 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
+
 
 # ===============================
 # Sidebar – File Uploads
