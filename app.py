@@ -37,15 +37,22 @@ st.markdown(
             background-color: #1e3a8a !important;
         }
 
-        /* Make all text inside sidebar white and smaller */
+        /* Default sidebar text to white and smaller */
         [data-testid="stSidebar"] * {
             color: white !important;
             font-size: 0.9rem !important;
         }
 
-        /* EXCEPTION: file uploader text to be black */
-        [data-testid="stSidebar"] [data-testid="stFileUploader"] * {
+        /* Uploader input elements: revert to black for readability */
+        [data-testid="stSidebar"] [data-testid="stFileUploader"] input,
+        [data-testid="stSidebar"] [data-testid="stFileUploader"] div[role="button"],
+        [data-testid="stSidebar"] [data-testid="stFileUploader"] span {
             color: black !important;
+        }
+
+        /* Uploader label text (e.g., "Choose a CSV file") to white */
+        [data-testid="stSidebar"] [data-testid="stFileUploader"] label {
+            color: white !important;
         }
 
         /* Chat message styling */
@@ -64,6 +71,7 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
+
 
 
 # ===============================
