@@ -31,27 +31,28 @@ st.set_page_config(layout="wide")
 st.markdown(
     """
     <style>
-    /* เปลี่ยนสีพื้นหลัง Sidebar แบบชัวร์ๆ */
-    section[data-testid="stSidebar"] {
+    /* ยัด style ลึกเข้าไปถึง element ของ sidebar */
+    [data-testid="stSidebar"] {
         background-color: #1e3a8a !important;
     }
 
-    /* ทำให้ข้อความเป็นสีขาวและขนาดเล็ก */
-    section[data-testid="stSidebar"] * {
+    /* ตัวหนังสือใน sidebar */
+    [data-testid="stSidebar"] * {
         color: white !important;
-        font-size: 0.85rem;
+        font-size: 0.85rem !important;
     }
 
-    /* ย่อ Sidebar */
-    section[data-testid="stSidebar"] {
-        width: 250px !important;
+    /* ปรับขนาด width ของ sidebar */
+    [data-testid="stSidebar"] > div:first-child {
+        padding: 1rem;
     }
 
-    /* ปรับ Main Content ตามความกว้างของ Sidebar */
-    div[class^="block-container"] {
+    /* ยกเลิก margin/padding ของ main content ที่อาจเบียด */
+    .main {
         padding-left: 2rem !important;
         padding-right: 2rem !important;
     }
+
     </style>
     """,
     unsafe_allow_html=True
