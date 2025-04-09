@@ -32,34 +32,31 @@ st.set_page_config(layout="wide")
 st.markdown(
     """
     <style>
-    /* Sidebar background color */
-    [data-testid="stSidebar"] {
-        background-color: #1e3a8a !important;
-    }
+        /* Sidebar styling */
+        [data-testid="stSidebar"] {
+            background-color: #1e3a8a;
+            color: #1e3a8a;
+            width: 250px;
+        }
 
-    /* Sidebar text styling */
-    [data-testid="stSidebar"] * {
-        color: white !important;
-        font-size: 1rem !important;
-    }
+        /* Make text inside sidebar smaller */
+        .sidebar-text {
+            font-size: 1rem;
+            color: white;
+        }
 
-    /* Optional: control sidebar padding */
-    [data-testid="stSidebar"] > div:first-child {
-        padding: 1rem;
-    }
-
-    /* Chat message styling */
-    .chat-message {
-        padding: 0.5rem;
-        border-radius: 0.5rem;
-        margin-bottom: 0.5rem;
-    }
-    .chat-user {
-        background-color: #f3f4f6;
-    }
-    .chat-bot {
-        background-color: #e5e7eb;
-    }
+        /* Chatbot message box */
+        .chat-message {
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .chat-user {
+            background-color: #f3f4f6;
+        }
+        .chat-bot {
+            background-color: #e5e7eb;
+        }
     </style>
     """,
     unsafe_allow_html=True
