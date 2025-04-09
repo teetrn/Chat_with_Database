@@ -31,31 +31,27 @@ st.set_page_config(layout="wide")
 st.markdown(
     """
     <style>
-        /* Sidebar styling */
-        [data-testid="stSidebar"] {
-            background-color: #1e3a8a;
-            color: #1e3a8a;
-            width: 250px;
-        }
+    /* เปลี่ยนสีพื้นหลัง Sidebar แบบชัวร์ๆ */
+    section[data-testid="stSidebar"] {
+        background-color: #1e3a8a !important;
+    }
 
-        /* Make text inside sidebar smaller */
-        .sidebar-text {
-            font-size: 1rem;
-            color: white;
-        }
+    /* ทำให้ข้อความเป็นสีขาวและขนาดเล็ก */
+    section[data-testid="stSidebar"] * {
+        color: white !important;
+        font-size: 0.85rem;
+    }
 
-        /* Chatbot message box */
-        .chat-message {
-            padding: 0.5rem;
-            border-radius: 0.5rem;
-            margin-bottom: 0.5rem;
-        }
-        .chat-user {
-            background-color: #f3f4f6;
-        }
-        .chat-bot {
-            background-color: #e5e7eb;
-        }
+    /* ย่อ Sidebar */
+    section[data-testid="stSidebar"] {
+        width: 250px !important;
+    }
+
+    /* ปรับ Main Content ตามความกว้างของ Sidebar */
+    div[class^="block-container"] {
+        padding-left: 2rem !important;
+        padding-right: 2rem !important;
+    }
     </style>
     """,
     unsafe_allow_html=True
