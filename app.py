@@ -40,7 +40,7 @@ st.markdown(
     /* Sidebar text styling */
     [data-testid="stSidebar"] * {
         color: white !important;
-        font-size: 0.85rem !important;
+        font-size: 1rem !important;
     }
 
     /* Optional: control sidebar padding */
