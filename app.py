@@ -32,20 +32,18 @@ st.set_page_config(layout="wide")
 st.markdown(
     """
     <style>
-        /* Sidebar styling */
+        /* Sidebar background */
         [data-testid="stSidebar"] {
-            background-color: #1e3a8a;
-            color: #1e3a8a;
-            width: 250px;
+            background-color: #1e3a8a !important;
         }
 
-        /* Make text inside sidebar smaller */
-        .sidebar-text {
-            font-size: 1rem;
-            color: white;
+        /* Make all text inside sidebar white and smaller */
+        [data-testid="stSidebar"] * {
+            color: white !important;
+            font-size: 0.9rem !important;
         }
 
-        /* Chatbot message box */
+        /* Chat message box */
         .chat-message {
             padding: 0.5rem;
             border-radius: 0.5rem;
