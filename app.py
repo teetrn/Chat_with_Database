@@ -31,11 +31,9 @@ st.set_page_config(layout="wide")
 st.markdown(
     """
     <style>
-        /* Sidebar styling */
+        /* Sidebar background color */
         [data-testid="stSidebar"] {
-            background-color: #1e3a8a;
-            color: white;
-            width: 250px;
+            background-color: #1e3a8a !important;
         }
 
         /* Make text inside sidebar smaller */
