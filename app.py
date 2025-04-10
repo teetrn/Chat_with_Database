@@ -40,7 +40,7 @@ st.markdown(
         /* Default sidebar text to white and smaller */
         [data-testid="stSidebar"] * {
             color: white !important;
-            font-size: 2.0rem !important;
+            font-size: 1.2rem !important;
         }
 
         /* Uploader input elements: revert to black for readability */
