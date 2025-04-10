@@ -5,7 +5,7 @@ import google.generativeai as genai
 # ===============================
 # SETUP API KEY (Hardcoded)
 # ===============================
-DEFAULT_GEMINI_API_KEY = "AAA123"
+DEFAULT_GEMINI_API_KEY = "AIzaSyAolFMOcNhhrKMnuLTPGGO7eS8UOxpmgfQ"
 
 try:
     genai.configure(api_key=DEFAULT_GEMINI_API_KEY)
