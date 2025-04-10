@@ -7,6 +7,7 @@ import google.generativeai as genai
 # ===============================
 DEFAULT_GEMINI_API_KEY = "AIzaSyAolFMOcNhhrKMnuLTPGGO7eS8UOxpmgfQ"
 
+# Configure Gemini with the default API Key
 try:
     genai.configure(api_key=DEFAULT_GEMINI_API_KEY)
     model = genai.GenerativeModel("gemini-pro")
@@ -25,114 +26,80 @@ if "data_dictionary" not in st.session_state:
     st.session_state.data_dictionary = None
 
 # ===============================
-# Page Config & Styling
+# Layout Setup
 # ===============================
 st.set_page_config(layout="wide")
-st.markdown(
-    """
-    <style>
-        /* Sidebar background color */
-        [data-testid="stSidebar"] {
-            background-color: #1e3a8a !important;
-        }
-
-        /* Make text inside sidebar smaller */
-        .sidebar-text {
-            font-size: 0.85rem;
-            color: white;
-        }
-
-        /* Chatbot message box */
-        .chat-message {
-            padding: 0.5rem;
-            border-radius: 0.5rem;
-            margin-bottom: 0.5rem;
-        }
-        .chat-user {
-            background-color: #f3f4f6;
-        }
-        .chat-bot {
-            background-color: #e5e7eb;
-        }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
-
-# ===============================
-# Layout Structure
-# ===============================
-col1, col2 = st.columns([0.7, 2.3])  # Sidebar / Chat area
+col1, col2 = st.columns([1, 2])  # Sidebar / Chat area
 
 # ===============================
 # Sidebar – File Uploads
 # ===============================
 with col1:
-    st.markdown("### <span class='sidebar-text'>📂 1. Upload CSV File</span>", unsafe_allow_html=True)
-    uploaded_file = st.file_uploader("", type=["csv"], label_visibility="collapsed")
+    st.header("📂 Upload Zone")
+
+    # Upload CSV file
+    st.subheader("1️⃣ Upload CSV File")
+    uploaded_file = st.file_uploader("Choose your CSV file", type=["csv"])
     if uploaded_file is not None:
         try:
             st.session_state.uploaded_data = pd.read_csv(uploaded_file)
-            st.success("✅ CSV uploaded")
+            st.success("✅ CSV file uploaded successfully!")
+            st.write("Preview of uploaded data:")
             st.dataframe(st.session_state.uploaded_data.head())
         except Exception as e:
             st.error(f"Error reading CSV: {e}")
-    else:
-        st.markdown("<span class='sidebar-text'>❗ ยังไม่ได้อัปโหลด CSV</span>", unsafe_allow_html=True)
 
-    st.markdown("---")
-
-    st.markdown("### <span class='sidebar-text'>📘 2. Data Dictionary (Optional)</span>", unsafe_allow_html=True)
-    data_dict_file = st.file_uploader("", type=["csv", "xlsx"], label_visibility="collapsed")
+    # Upload Data Dictionary (Optional)
+    st.subheader("2️⃣ Upload Data Dictionary (Optional)")
+    data_dict_file = st.file_uploader("Choose a Data Dictionary file", type=["csv", "xlsx"])
     if data_dict_file is not None:
         try:
             if data_dict_file.name.endswith(".xlsx"):
                 st.session_state.data_dictionary = pd.read_excel(data_dict_file)
             else:
                 st.session_state.data_dictionary = pd.read_csv(data_dict_file)
-            st.success("✅ Data Dictionary uploaded")
+            st.success("✅ Data Dictionary uploaded successfully!")
+            st.write("Preview of Data Dictionary:")
             st.dataframe(st.session_state.data_dictionary.head())
         except Exception as e:
-            st.error(f"Error reading dictionary: {e}")
-    else:
-        st.markdown("<span class='sidebar-text'>ℹ️ ยังไม่อัปโหลด (ไม่บังคับ)</span>", unsafe_allow_html=True)
+            st.error(f"Error reading Data Dictionary: {e}")
 
-    st.markdown("---")
-
+    # Checkbox to enable analysis
     analyze_data_checkbox = st.checkbox("🔎 Enable AI Analysis", value=True)
 
 # ===============================
-# Chat Area
+# Main Chat Section
 # ===============================
 with col2:
     st.title("🤖 Chat with Your Data")
-
     for role, message in st.session_state.chat_history:
-        css_class = "chat-user" if role == "user" else "chat-bot"
-        st.markdown(f"<div class='chat-message {css_class}'>{message}</div>", unsafe_allow_html=True)
+        st.chat_message(role).markdown(message)
 
     if user_input := st.chat_input("Type your question here..."):
         st.session_state.chat_history.append(("user", user_input))
-        st.markdown(f"<div class='chat-message chat-user'>{user_input}</div>", unsafe_allow_html=True)
+        st.chat_message("user").markdown(user_input)
 
         try:
             if st.session_state.uploaded_data is not None and analyze_data_checkbox:
+                # If user wants to analyze data
                 if "analyze" in user_input.lower() or "insight" in user_input.lower():
                     data_description = st.session_state.uploaded_data.describe().to_string()
 
+                    # Optional: include data dictionary in prompt
                     if st.session_state.data_dictionary is not None:
                         data_dict_info = st.session_state.data_dictionary.to_string()
-                        prompt = f"Analyze this dataset:\n\nData:\n{data_description}\n\nData Dictionary:\n{data_dict_info}"
+                        prompt = f"Analyze the dataset below and provide insights:\n\nData:\n{data_description}\n\nData Dictionary:\n{data_dict_info}"
                     else:
-                        prompt = f"Analyze this dataset:\n\n{data_description}"
+                        prompt = f"Analyze the dataset below and provide insights:\n\n{data_description}"
 
                     response = model.generate_content(prompt)
                     bot_response = response.text
                 else:
+                    # General conversation
                     response = model.generate_content(user_input)
                     bot_response = response.text
             elif not analyze_data_checkbox:
-                bot_response = "🔒 AI Analysis is disabled."
+                bot_response = "🔒 AI Analysis is disabled. Please enable the checkbox to analyze data."
             else:
                 bot_response = "📁 Please upload a CSV file first."
 
@@ -140,4 +107,4 @@ with col2:
             bot_response = f"❌ Error: {e}"
 
         st.session_state.chat_history.append(("assistant", bot_response))
-        st.markdown(f"<div class='chat-message chat-bot'>{bot_response}</div>", unsafe_allow_html=True)
+        st.chat_message("assistant").markdown(bot_response)
